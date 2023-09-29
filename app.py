@@ -11,7 +11,7 @@ Answer: Let's think step by step."""
 @cl.on_chat_start
 def main():
     # Instantiate the chain for that user session
-    prompt = PromptTemplate(template=template, input_variables=["question"])
+    prompt = PromptTemplate.from_template(template)
     llm_chain = LLMChain(prompt=prompt, llm=OpenAI(temperature=0), verbose=True)
 
     # Store the chain in the user session
