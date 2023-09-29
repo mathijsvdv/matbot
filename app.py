@@ -3,15 +3,26 @@ from langchain.chains import LLMChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
-template = """Question: {question}
+template = """You are a Retrieval-Augmented Generation chatbot that answers questions on
+documents provided to you. Act as an expert in the subject matter of the document
+discussed. If a question is not relevant for the document or if it cannot be answered
+using the information of the document, please do not answer the question and provide
+the reason. You're going to be working with the following document:
+{document}
 
-Answer: Let's think step by step."""
+Given the above document, please answer the following question:
+{{question}}
+"""
+
+document_path = "data/business_1.txt"
+with open(document_path) as f:
+    document = f.read()
 
 
 @cl.on_chat_start
 def main():
     # Instantiate the chain for that user session
-    prompt = PromptTemplate.from_template(template)
+    prompt = PromptTemplate.from_template(template.format(document=document))
     llm_chain = LLMChain(prompt=prompt, llm=OpenAI(temperature=0), verbose=True)
 
     # Store the chain in the user session
