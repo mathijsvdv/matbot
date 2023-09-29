@@ -18,7 +18,7 @@ pip install matbot
 ```
 
 ## Development
-This repo uses [Hatch](https://github.com/pypa/hatch) for dependency management. We recommend 
+This repo uses [Hatch](https://github.com/pypa/hatch) for dependency management. We recommend
 [using `pipx` to install it globally](https://hatch.pypa.io/latest/install/).
 
 ## License
