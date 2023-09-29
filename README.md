@@ -18,8 +18,14 @@ pip install matbot
 ```
 
 ## Development
-This repo uses [Hatch](https://github.com/pypa/hatch) for dependency management. We recommend
-[using `pipx` to install it globally](https://hatch.pypa.io/latest/install/).
+This repo uses [Hatch](https://github.com/pypa/hatch) for dependency management. I recommend
+[using `pipx` to install it globally](https://hatch.pypa.io/latest/install/). I also recommend
+setting the virtual environment directory to:
+```
+config set dirs.env.virtual .direnv
+```
+so that Visual Studio Code easily recognizes it as an interpreter.
+
 
 ## License
 

@@ -38,6 +38,7 @@ path = "src/matbot/__about__.py"
 dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
+  "ipykernel==6.25.2"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
