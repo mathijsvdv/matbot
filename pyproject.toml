@@ -38,7 +38,10 @@ path = "src/matbot/__about__.py"
 dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
-  "ipykernel==6.25.2"
+  "ipykernel==6.25.2",
+  "langchain==0.0.304",
+  "chainlit==0.7.0",
+  "openai==0.28.1"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
@@ -122,6 +125,8 @@ ignore = [
   "S105", "S106", "S107",
   # Ignore complexity
   "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+  # Ignore redefinition of unused variables
+  "F811",
 ]
 unfixable = [
   # Don't touch unused imports
