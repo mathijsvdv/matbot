@@ -1,5 +1,7 @@
 import chainlit as cl
-from langchain import LLMChain, OpenAI, PromptTemplate
+from langchain.chains import LLMChain
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
 
 template = """Question: {question}
 
