@@ -1,12 +1,21 @@
 import chainlit as cl
+from langchain.callbacks.manager import CallbackManager
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import LLMChain
-from langchain.llms import OpenAI
+from langchain.llms import Ollama, OpenAI
 from langchain.prompts import PromptTemplate
+
+llms = {
+    "openai": OpenAI(temperature=0),
+    "mistral": Ollama(
+        model="mistral:latest", verbose=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()])
+    ),
+}
 
 template = """You are a Retrieval-Augmented Generation chatbot that answers questions on
 documents provided to you. Act as an expert in the subject matter of the document
 discussed. If a question is not relevant for the document or if it cannot be answered
-using the information of the document, please do not answer the question and provide
+using the information of the document, please do not answer the question and politely provide
 the reason. You're going to be working with the following document:
 {document}
 
