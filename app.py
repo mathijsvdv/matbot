@@ -32,7 +32,7 @@ with open(document_path) as f:
 def main():
     # Instantiate the chain for that user session
     prompt = PromptTemplate.from_template(template.format(document=document))
-    llm_chain = LLMChain(prompt=prompt, llm=OpenAI(temperature=0), verbose=True)
+    llm_chain = LLMChain(prompt=prompt, llm=llms["mistral"], verbose=True)
 
     # Store the chain in the user session
     cl.user_session.set("llm_chain", llm_chain)
