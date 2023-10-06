@@ -6,4 +6,13 @@ init:
 
 update: init
 
-.PHONY: init update
+install_ollama:
+	curl https://ollama.ai/install.sh | sh
+
+ollama_serve:
+	ollama serve
+
+ollama_run_mistral:
+	ollama run mistral
+
+.PHONY: init update install_ollama ollama_serve ollama_run_mistral
