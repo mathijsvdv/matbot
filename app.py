@@ -8,7 +8,7 @@ from langchain.prompts import PromptTemplate
 llms = {
     "openai": OpenAI(temperature=0),
     "mistral": Ollama(
-        model="mistral:latest", verbose=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()])
+        model="mistral", verbose=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()])
     ),
 }
 
@@ -43,8 +43,12 @@ async def main(message: str):
     # Retrieve the chain from the user session
     llm_chain = cl.user_session.get("llm_chain")  # type: LLMChain
 
-    # Call the chain asynchronously
-    res = await llm_chain.acall(message, callbacks=[cl.AsyncLangchainCallbackHandler()])
+    try:
+        # Call the chain asynchronously
+        res = await llm_chain.acall(message, callbacks=[cl.AsyncLangchainCallbackHandler()])
+    except NotImplementedError:
+        # If the chain does not support asynchronous calls, fallback to synchronous
+        res = llm_chain(message, callbacks=[cl.LangchainCallbackHandler()])
 
     # Do any post processing here
 
