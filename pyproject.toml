@@ -41,7 +41,8 @@ dependencies = [
   "ipykernel==6.25.2",
   "langchain==0.0.304",
   "chainlit==0.7.0",
-  "openai==0.28.1"
+  "openai==0.28.1",
+  "chromadb==0.4.14"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
