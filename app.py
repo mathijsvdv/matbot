@@ -1,9 +1,11 @@
 import chainlit as cl
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.chains import LLMChain
+from langchain.chains import RetrievalQA
+from langchain.embeddings.ollama import OllamaEmbeddings
 from langchain.llms import Ollama, OpenAI
 from langchain.prompts import PromptTemplate
+from langchain.vectorstores import Chroma
 
 llms = {
     "openai": OpenAI(temperature=0),
@@ -12,27 +14,31 @@ llms = {
     ),
 }
 
+persist_directory = "./docs/chroma"
+embedding = OllamaEmbeddings(model="mistral")
+vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
+
 template = """You are a Retrieval-Augmented Generation chatbot that answers questions on
 documents provided to you. Act as an expert in the subject matter of the document
 discussed. If a question is not relevant for the document or if it cannot be answered
 using the information of the document, please do not answer the question and politely provide
-the reason. You're going to be working with the following document:
-{document}
+the reason.
+Document: {context}
 
-Given the above document, please answer the following question:
-{{question}}
-"""
-
-document_path = "data/business_1.txt"
-with open(document_path) as f:
-    document = f.read()
+Question: {question}
+Helpful Answer:"""
 
 
 @cl.on_chat_start
 def main():
     # Instantiate the chain for that user session
-    prompt = PromptTemplate.from_template(template.format(document=document))
-    llm_chain = LLMChain(prompt=prompt, llm=llms["mistral"], verbose=True)
+    prompt = PromptTemplate.from_template(template)
+    llm_chain = RetrievalQA.from_chain_type(
+        llm=llms["mistral"],
+        retriever=vectordb.as_retriever(),
+        return_source_documents=True,
+        chain_type_kwargs={"prompt": prompt, "verbose": True},
+    )
 
     # Store the chain in the user session
     cl.user_session.set("llm_chain", llm_chain)
@@ -54,4 +60,4 @@ async def main(message: str):
 
     # "res" is a Dict. For this chain, we get the response by reading the "text" key.
     # This varies from chain to chain, you should check which key to read.
-    await cl.Message(content=res["text"]).send()
+    await cl.Message(content=res["result"]).send()
