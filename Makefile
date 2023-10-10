@@ -12,7 +12,13 @@ install_ollama:
 ollama_serve:
 	ollama serve
 
+ollama_pull_mistral:
+	ollama pull mistral
+
 ollama_run_mistral:
 	ollama run mistral
 
-.PHONY: init update install_ollama ollama_serve ollama_run_mistral
+run:
+	chainlit run app.py
+
+.PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral
