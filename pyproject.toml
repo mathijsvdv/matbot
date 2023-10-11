@@ -42,7 +42,10 @@ dependencies = [
   "langchain==0.0.304",
   "chainlit==0.7.0",
   "openai==0.28.1",
-  "chromadb==0.4.14"
+  "chromadb==0.4.14",
+  "fastapi[all]==0.99.1",
+  "uvicorn[standard]==0.23.2",
+  "python-dotenv==1.0.0"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"

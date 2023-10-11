@@ -1,3 +1,5 @@
+API_PORT = 5000
+
 init:
 	pre-commit install
 	pre-commit autoupdate
@@ -20,5 +22,8 @@ ollama_run_mistral:
 
 run:
 	chainlit run app.py
+
+serve:
+	uvicorn serve:app --port $(API_PORT) --reload
 
 .PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral

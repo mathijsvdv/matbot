@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import RetrievalQA
@@ -5,6 +6,8 @@ from langchain.embeddings.ollama import OllamaEmbeddings
 from langchain.llms import Ollama, OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores.chroma import Chroma
+
+load_dotenv()
 
 llms = {
     "openai": OpenAI(temperature=0),
@@ -25,12 +28,14 @@ the reason.
 Document: {context}
 
 Question: {question}
-Helpful Answer:"""
+Helpful Answer:
+"""
 
 prompt = PromptTemplate.from_template(template)
 
+llm_name = "mistral"
 llm_chain = RetrievalQA.from_chain_type(
-    llm=llms["mistral"],
+    llm=llms[llm_name],
     retriever=vectordb.as_retriever(),
     return_source_documents=True,
     chain_type_kwargs={"prompt": prompt, "verbose": True},
