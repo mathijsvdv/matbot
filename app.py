@@ -1,12 +1,12 @@
 import chainlit as cl
 
-from constants import llm_chain
+from constants import app_chain
 
 
 @cl.on_chat_start
 def main():
     # Store the chain in the user session
-    cl.user_session.set("llm_chain", llm_chain)
+    cl.user_session.set("llm_chain", app_chain)
 
 
 @cl.on_message

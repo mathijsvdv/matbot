@@ -7,6 +7,8 @@ from langchain.llms import Ollama, OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores.chroma import Chroma
 
+from matbot.chains import APICallingChain
+
 load_dotenv()
 
 llms = {
@@ -40,5 +42,5 @@ llm_chain = RetrievalQA.from_chain_type(
     return_source_documents=True,
     chain_type_kwargs={"prompt": prompt, "verbose": True},
 )
-
 api_url = "http://localhost:5000/chat"
+app_chain = APICallingChain(api_url=api_url)
