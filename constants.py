@@ -40,3 +40,5 @@ llm_chain = RetrievalQA.from_chain_type(
     return_source_documents=True,
     chain_type_kwargs={"prompt": prompt, "verbose": True},
 )
+
+api_url = "http://localhost:5000/chat"
