@@ -1,4 +1,6 @@
 API_PORT = 5000
+IMAGE = matbot
+CONTAINER = matbot
 
 init:
 	pre-commit install
@@ -20,10 +22,19 @@ ollama_pull_mistral:
 ollama_run_mistral:
 	ollama run mistral
 
-run:
-	chainlit run app.py
+chainlit:
+	chainlit run chainlit_app.py
 
-serve:
-	uvicorn serve:app --port $(API_PORT) --reload
+fastapi:
+	uvicorn fastapi_app:app --port $(API_PORT) --reload
 
-.PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral
+docker_build:
+	docker build -t $(IMAGE) .
+
+docker_run:
+	docker run -d --name $(CONTAINER) -p $(API_PORT):$(API_PORT) --env-file .env $(IMAGE)
+
+docker_rm:
+	docker rm -f $(CONTAINER)
+
+.PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral run serve docker_build docker_run docker_rm
