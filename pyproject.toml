@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-requirements-txt"]
 build-backend = "hatchling.build"
 
 [project]
 name = "matbot"
-dynamic = ["version"]
+dynamic = ["version", "dependencies"]
 description = 'Chatbot that responds to questions based on a set of documents or notes. The chatbot uses Retrieval Augmented Generation (RAG) to source knowledge from these documents. A local LLM is used to preserve privacy of the documents.'
 readme = "README.md"
 requires-python = ">=3.7"
@@ -24,7 +24,6 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
 
 [project.urls]
 Documentation = "https://github.com/unknown/matbot#readme"
@@ -34,18 +33,14 @@ Source = "https://github.com/unknown/matbot"
 [tool.hatch.version]
 path = "src/matbot/__about__.py"
 
+[tool.hatch.metadata.hooks.requirements_txt]
+files = ["requirements.txt"]
+
 [tool.hatch.envs.default]
 dependencies = [
   "coverage[toml]>=6.5",
-  "pytest",
-  "ipykernel==6.25.2",
-  "langchain==0.0.304",
-  "chainlit==0.7.0",
-  "openai==0.28.1",
-  "chromadb==0.4.14",
-  "fastapi[all]==0.99.1",
-  "uvicorn[standard]==0.23.2",
-  "python-dotenv==1.0.0"
+  "pytest==7.4.2",
+  "ipykernel==6.25.2"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
