@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  ollama:
+    image: ollama/ollama
+    hostname: ollama
+    container_name: ollama
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # ollama-mistral:
+  #   image: ollama/ollama
+  #   depends_on:
+  #     - ollama
+  #   restart: "no"
+  #   entrypoint: ["bash", "-c", "sleep 5 && ollama pull mistral"]
+
+volumes:   # add this section
+  ollama:    # does not need anything underneath this
