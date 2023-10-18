@@ -37,4 +37,8 @@ docker_run:
 docker_rm:
 	docker rm -f $(CONTAINER)
 
-.PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral run serve docker_build docker_run docker_rm
+docker_compose_up:
+	docker compose up -d
+	ollama pull mistral
+
+.PHONY: init update install_ollama ollama_serve ollama_pull_mistral ollama_run_mistral run serve docker_build docker_run docker_rm docker_compose_up
