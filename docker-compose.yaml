@@ -17,12 +17,5 @@ services:
               count: 1
               capabilities: [gpu]
 
-  # ollama-mistral:
-  #   image: ollama/ollama
-  #   depends_on:
-  #     - ollama
-  #   restart: "no"
-  #   entrypoint: ["bash", "-c", "sleep 5 && ollama pull mistral"]
-
 volumes:   # add this section
   ollama:    # does not need anything underneath this
